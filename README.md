@@ -38,34 +38,132 @@ Note the progressive replacement in the formulas with the Python representation 
 ## Example in Python:
 
 ```python
+def p(a, b):
+    n = len(a)
+    m = [0, 0]
 
+    for i in range(n):
+        m[0] += a[i]
+        m[1] += b[i]
+
+    m[0] = m[0] / n  # mean a.
+    m[1] = m[1] / n  # mean b.
+
+    s0 = 0
+    s1 = 0
+    s2 = 0
+
+    for i in range(n):
+        s0 += (a[i] - m[0]) * (b[i] - m[1])
+        s1 += (a[i] - m[0]) ** 2
+        s2 += (b[i] - m[1]) ** 2
+
+    r = s0 / (s1 * s2) ** 0.5
+
+    return r
+
+a = [6, 8, 10]
+b = [12, 10, 20]
+
+print(p(a, b))
 ``` 
 
 ```text
 Python output:
-
+0.7559289460184544
 ```
 
 ## Example in Javascript:
 
 ```javascript
+let a = [6, 8, 10];
+let b = [12, 10, 20];
 
+print(p(a,b));
+
+function p(a,b){
+
+    let n = a.length;
+    let m = [];
+    m[0] = 0;
+    m[1] = 0;
+    
+    for(let i=0; i<n; i++){
+        m[0] += a[i];
+        m[1] += b[i];
+    }
+
+    m[0] = m[0] / n; // mean a
+    m[1] = m[1] / n; // mean b
+
+    let s0 = 0;
+    let s1 = 0;
+    let s2 = 0;
+    
+    for(let i=0; i<n; i++){
+        s0 += (a[i]-m[0])*(b[i]-m[1]);
+        s1 += Math.pow(a[i]-m[0], 2);
+        s2 += Math.pow(b[i]-m[1], 2);
+    }
+
+    r = s0 / Math.sqrt(s1 * s2);
+
+    return r;
+}
 ```
 
 ```text
 Javascript output:
-
+0.7559289460184544
 ```
 
 ## Example in Matlab:
 
 ```matlab
+a = [6, 8, 10];
+b = [12, 10, 20];
 
+disp(p(a,b));
+
+function r = p(a, b)
+    n = length(a);
+    m = zeros(1,2);
+    
+    for i = 1:n
+        m(1) = m(1) + a(i);
+        m(2) = m(2) + b(i);
+    end
+
+    m(1) = m(1) / n; % mean a.
+    m(2) = m(2) / n; % mean b.
+
+    s0 = 0;
+    s1 = 0;
+    s2 = 0;
+    
+    for i = 1:n
+        s0 = s0 + (a(i)-m(1)) * (b(i)-m(2));
+        s1 = s1 + (a(i)-m(1))^2;
+        s2 = s2 + (b(i)-m(2))^2;
+    end
+
+    r = s0 / sqrt(s1 * s2);
+end
+
+% Also, a MATLAB built-in version would be:
+
+a = [6, 8, 10];
+b = [12, 10, 20];
+
+m = corrcoef(a, b);
+r = m(1,2);
+
+disp(r);
 ```
 
 ```text
 Matlab output:
-
+0.7559289460184544
 ```
 
 ## References
